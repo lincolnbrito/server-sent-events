@@ -1,0 +1,39 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+	<script type="text/javascript">
+		$(function(){
+			if (!!window.EventSource) {
+				var source = new EventSource('events.php');
+			} else {
+			// Result to xhr polling :(
+			}
+
+			source.addEventListener('message', function(e) {
+			  // var data = JSON.parse(e.data);
+			  console.log(e.data);
+			  $("#ticker").html(e.data);
+			}, false);
+
+			source.addEventListener('userlogon', function(e) {
+			  var data = JSON.parse(e.data);
+			  console.log('User login:' + data.username);
+			}, false);
+
+			source.addEventListener('update', function(e) {
+			  var data = JSON.parse(e.data);
+			  console.log(data.username + ' is now ' + data.emotion);
+			}, false);
+		});		
+	</script>
+</head>
+<body>
+	
+	<div id="ticker" name="ticker" style="border: 1px solid black; padding: 10px;">
+		[TIME]
+	</div>
+</body>
+</html>
