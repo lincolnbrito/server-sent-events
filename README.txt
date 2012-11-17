@@ -1,0 +1,1 @@
+A simple use of Server Sent Events - HTML5
